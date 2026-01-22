@@ -474,6 +474,7 @@ typedef struct JPH_RVec3 {
 	double x;
 	double y;
 	double z;
+	double _padding; // Add this to match Jolt 5.0+ 32-byte alignment
 } JPH_RVec3;
 
 typedef struct JPH_RMat4 {
