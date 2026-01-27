@@ -10754,6 +10754,27 @@ void JPH_WheeledVehicleControllerSettings_SetDifferentials(JPH_WheeledVehicleCon
 	}
 }
 
+// Helper to ensure a wheel is driven without manual diff setup
+JPH_CAPI void JPH_WheeledVehicleControllerSettings_AddDifferential(JPH_WheeledVehicleControllerSettings* settings, int leftWheel, int rightWheel)
+{
+    JPH_ASSERT(settings);
+    VehicleDifferentialSettings diff;
+    diff.mLeftWheel = leftWheel;
+    diff.mRightWheel = rightWheel;
+    diff.mDifferentialRatio = 3.5f; 
+    diff.mLimitedSlipRatio = 1.4f;
+    diff.mEngineTorqueRatio = 1.0f; // This is normalized automatically when multiple are added
+
+    auto* controller = AsWheeledVehicleControllerSettings(settings);
+    controller->mDifferentials.push_back(diff);
+    
+    // Ensure torque is split evenly across all differentials (e.g. 0.5 for Front, 0.5 for Rear)
+    float ratio = 1.0f / (float)controller->mDifferentials.size();
+    for (auto& d : controller->mDifferentials) {
+        d.mEngineTorqueRatio = ratio;
+    }
+}
+
 float JPH_WheeledVehicleControllerSettings_GetDifferentialLimitedSlipRatio(const JPH_WheeledVehicleControllerSettings* settings)
 {
 	return AsWheeledVehicleControllerSettings(settings)->mDifferentialLimitedSlipRatio;
