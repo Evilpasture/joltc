@@ -584,6 +584,24 @@ static inline void ToJolt(ContactSettings& jolt, const JPH_ContactSettings* sett
 	jolt.mRelativeAngularSurfaceVelocity = ToJolt(settings->relativeAngularSurfaceVelocity);
 }
 
+static void ToJolt(JPH::VehicleTrackSettings& joltTrack, const JPH_VehicleTrackSettings* track)
+{
+	joltTrack.mDrivenWheel = track->drivenWheel;
+	joltTrack.mInertia = track->inertia;
+	joltTrack.mAngularDamping = track->angularDamping;
+	joltTrack.mMaxBrakeTorque = track->maxBrakeTorque;
+	joltTrack.mDifferentialRatio = track->differentialRatio;
+
+	joltTrack.mWheels.clear();
+	if (track->wheels && track->wheelsCount > 0)
+	{
+		for (uint32_t i = 0; i < track->wheelsCount; ++i)
+		{
+			joltTrack.mWheels.push_back(track->wheels[i]);
+		}
+	}
+}
+
 void JPH_MassProperties_DecomposePrincipalMomentsOfInertia(JPH_MassProperties* properties, JPH_Mat4* rotation, JPH_Vec3* diagonal)
 {
 	JPH::Mat44 joltRotation;
@@ -10953,6 +10971,20 @@ JPH_CAPI void JPH_TrackedVehicleControllerSettings_SetTransmission(JPH_TrackedVe
 	JPH_ASSERT(value);
 
 	AsTrackedVehicleControllerSettings(settings)->mTransmission = *AsVehicleTransmissionSettings(value);
+}
+
+JPH_CAPI void JPH_TrackedVehicleControllerSettings_SetTrack(JPH_TrackedVehicleControllerSettings* settings, uint32_t index, const JPH_VehicleTrackSettings* track)
+{
+	JPH_ASSERT(settings);
+	JPH_ASSERT(track);
+	
+	// Jolt only supports 2 tracks (Left=0, Right=1)
+	if (index >= 2) return; 
+
+	JPH::VehicleTrackSettings joltTrack;
+	ToJolt(joltTrack, track);
+
+	AsTrackedVehicleControllerSettings(settings)->mTracks[index] = joltTrack;
 }
 
 void JPH_TrackedVehicleController_SetDriverInput(JPH_TrackedVehicleController* controller, float forward, float leftRatio, float rightRatio, float brake)
