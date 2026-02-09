@@ -10325,6 +10325,11 @@ void JPH_VehicleTransmissionSettings_SetClutchStrength(JPH_VehicleTransmissionSe
 }
 
 /* VehicleTransmission */
+void JPH_VehicleTransmission_SetMode(JPH_VehicleTransmission* transmission, JPH_TransmissionMode mode)
+{
+    AsVehicleTransmission(transmission)->mMode = static_cast<JPH::ETransmissionMode>(mode);
+}
+
 void JPH_VehicleTransmission_Set(JPH_VehicleTransmission* transmission, int currentGear, float clutchFriction)
 {
 	AsVehicleTransmission(transmission)->Set(currentGear, clutchFriction);

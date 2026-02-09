@@ -2868,6 +2868,7 @@ JPH_CAPI float JPH_VehicleTransmissionSettings_GetClutchStrength(const JPH_Vehic
 JPH_CAPI void JPH_VehicleTransmissionSettings_SetClutchStrength(JPH_VehicleTransmissionSettings* settings, float value);
 
 /* VehicleTransmission */
+JPH_CAPI void JPH_VehicleTransmission_SetMode(JPH_VehicleTransmission* transmission, JPH_TransmissionMode mode);
 JPH_CAPI void JPH_VehicleTransmission_Set(JPH_VehicleTransmission* transmission, int currentGear, float clutchFriction);
 JPH_CAPI void JPH_VehicleTransmission_Update(JPH_VehicleTransmission* transmission, float deltaTime, float currentRPM, float forwardInput, bool canShiftUp);
 JPH_CAPI int JPH_VehicleTransmission_GetCurrentGear(const JPH_VehicleTransmission* transmission);
