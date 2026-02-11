@@ -760,7 +760,7 @@ bool JPH_Init()
 	if (s_initialized)
 		return true;
 
-	std::cout << ">>> [CULVERIN] LOADING PATCHED JOLTC (MALLOC ALLOCATOR) <<<" << std::endl;
+	std::cout << ">>> TempAllocator implementation with malloc fallback from JoltC... <<<" << std::endl;
 
 	JPH::RegisterDefaultAllocator();
 
@@ -775,7 +775,8 @@ bool JPH_Init()
 	JPH::RegisterTypes();
 
 	// Init temp allocator
-	s_TempAllocator = new TempAllocatorMalloc(); 
+	s_TempAllocator = new TempAllocatorImplWithMallocFallback(8 * 1024 * 1024); 
+	// s_TempAllocator = new TempAllocatorMalloc(); 
 	s_initialized = true;
 
 	return true;
