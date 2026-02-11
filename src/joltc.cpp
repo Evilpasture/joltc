@@ -773,7 +773,7 @@ bool JPH_Init()
 	JPH::RegisterTypes();
 
 	// Init temp allocator
-	s_TempAllocator = new TempAllocatorImplWithMallocFallback(8 * 1024 * 1024);
+	s_TempAllocator = new TempAllocatorMalloc(); 
 	s_initialized = true;
 
 	return true;
