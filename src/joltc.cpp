@@ -760,8 +760,6 @@ bool JPH_Init()
 	if (s_initialized)
 		return true;
 
-	std::cout << ">>> TempAllocator implementation with malloc fallback from JoltC... <<<" << std::endl;
-
 	JPH::RegisterDefaultAllocator();
 
 	// TODO
