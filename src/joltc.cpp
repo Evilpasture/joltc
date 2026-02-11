@@ -760,7 +760,7 @@ bool JPH_Init()
 	if (s_initialized)
 		return true;
 
-	printf("[Culverin-Internal] JoltC Fork Loaded with TempAllocatorMalloc\n");
+	std::cout << ">>> [CULVERIN] LOADING PATCHED JOLTC (MALLOC ALLOCATOR) <<<" << std::endl;
 
 	JPH::RegisterDefaultAllocator();
 
