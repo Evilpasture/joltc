@@ -77,7 +77,7 @@ JPH_SUPPRESS_WARNINGS
 #include "Jolt/Physics/Vehicle/VehicleTrack.h"
 #include "Jolt/Core/LinearCurve.h"
 
-#include <iostream>
+#include <cstdio>
 #include <cstdarg>
 
 // All Jolt symbols are in the JPH namespace
@@ -228,18 +228,20 @@ static void TraceImpl(const char* fmt, ...)
 	// Format the message
 	va_list list;
 	va_start(list, fmt);
-	char buffer[1024];
-	vsnprintf(buffer, sizeof(buffer), fmt, list);
-	va_end(list);
-
+	
 	// Print to the TTY
 	if (s_TraceFunc)
 	{
+		char buffer[1024];
+		vsnprintf(buffer, sizeof(buffer), fmt, list);
+		va_end(list);
 		s_TraceFunc(buffer);
 	}
 	else
 	{
-		std::cout << buffer << std::endl;
+		vfprintf(stdout, fmt, list);
+        printf("\n");
+        fflush(stdout);
 	}
 }
 
@@ -255,7 +257,7 @@ static bool AssertFailedImpl(const char* inExpression, const char* inMessage, co
 	}
 
 	// Print to the TTY
-	std::cout << inFile << ":" << inLine << ": (" << inExpression << ") " << (inMessage != nullptr ? inMessage : "") << std::endl;
+	fprintf(stderr, "%s:%u: (%s) %s\n", inFile, inLine, inExpression, (inMessage != nullptr) ? inMessage : "");
 
 	// Breakpoint
 	return true;
