@@ -5614,6 +5614,11 @@ bool JPH_BodyInterface_IsAdded(JPH_BodyInterface* bodyInterface, JPH_BodyID body
 	return AsBodyInterface(bodyInterface)->IsAdded(JPH::BodyID(bodyID));
 }
 
+JPH_CAPI const JPH_Body* JPH_PhysicsSystem_GetBodyPtr(const JPH_PhysicsSystem* system, JPH_BodyID bodyID)
+{
+	return reinterpret_cast<const JPH_Body*>(system->physicsSystem->GetBodyLockInterface().TryGetBody(JPH::BodyID(bodyID)));
+}
+
 JPH_BodyType JPH_BodyInterface_GetBodyType(JPH_BodyInterface* bodyInterface, JPH_BodyID bodyID)
 {
 	return static_cast<JPH_BodyType>(AsBodyInterface(bodyInterface)->GetBodyType(JPH::BodyID(bodyID)));
