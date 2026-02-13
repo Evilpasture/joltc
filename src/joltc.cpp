@@ -5263,6 +5263,18 @@ uint32_t JPH_PhysicsSystem_GetNumActiveBodies(const JPH_PhysicsSystem* system, J
 	return system->physicsSystem->GetNumActiveBodies(static_cast<JPH::EBodyType>(type));
 }
 
+JPH_CAPI void JPH_PhysicsSystem_GetActiveBodies(const JPH_PhysicsSystem* system, JPH_BodyID* ids, uint32_t count)
+{
+	JPH::BodyIDVector activeBodies;
+	// The enum value is RigidBody
+	system->physicsSystem->GetActiveBodies(JPH::EBodyType::RigidBody, activeBodies);
+    
+	uint32_t copyCount = std::min(count, (uint32_t)activeBodies.size());
+	for (uint32_t i = 0; i < copyCount; i++) {
+		ids[i] = activeBodies[i].GetIndexAndSequenceNumber();
+	}
+}
+
 uint32_t JPH_PhysicsSystem_GetMaxBodies(const JPH_PhysicsSystem* system)
 {
 	JPH_ASSERT(system);
