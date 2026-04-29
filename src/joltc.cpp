@@ -1049,6 +1049,15 @@ void JPH_PhysicsSystem_Destroy(JPH_PhysicsSystem* system)
 	}
 }
 
+// For C/C++ interop
+void* JPH_PhysicsSystem_GetPhysicsSystemInstance(const JPH_PhysicsSystem* system) {
+    if (system) 
+	{
+        return static_cast<void*>(system->physicsSystem); 
+    }
+    return nullptr;
+}
+
 void JPH_PhysicsSystem_SetPhysicsSettings(JPH_PhysicsSystem* system, JPH_PhysicsSettings* settings)
 {
 	JPH::PhysicsSettings joltSettings;

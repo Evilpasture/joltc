@@ -1127,6 +1127,9 @@ typedef struct JPH_PhysicsSettings {
 JPH_CAPI JPH_PhysicsSystem* JPH_PhysicsSystem_Create(const JPH_PhysicsSystemSettings* settings);
 JPH_CAPI void JPH_PhysicsSystem_Destroy(JPH_PhysicsSystem* system);
 
+// Returns the raw C++ JPH::PhysicsSystem instance. This pointer is only valid for use with the native Jolt C++ API.
+JPH_CAPI void* JPH_PhysicsSystem_GetPhysicsSystemInstance(const JPH_PhysicsSystem* system);
+
 JPH_CAPI void JPH_PhysicsSystem_SetPhysicsSettings(JPH_PhysicsSystem* system, JPH_PhysicsSettings* settings);
 JPH_CAPI void JPH_PhysicsSystem_GetPhysicsSettings(JPH_PhysicsSystem* system, JPH_PhysicsSettings* result);
 
