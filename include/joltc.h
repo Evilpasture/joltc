@@ -998,6 +998,7 @@ typedef struct JPH_CharacterVirtualContact {
 	bool							hadCollision;
 	bool							wasDiscarded;
 	bool							canPushCharacter;
+	bool                            isBackFacingContact;
 } JPH_CharacterVirtualContact;
 
 typedef void(JPH_API_CALL* JPH_TraceFunc)(const char* message);
